@@ -100,20 +100,20 @@ class ServiceNowConnector {
   }
   
   /**
-  * @memberof ServiceNowConnector
+   * @memberof ServiceNowConnector
    * @method processRequestResults
- * @description Inspect ServiceNow API response for an error, bad response code, or
- *   a hibernating instance. If any of those conditions are detected, return an error.
- *   Else return the API's response.
- *
- * @param {error} error - The error argument passed by the request function in its callback.
- * @param {object} response - The response argument passed by the request function in its callback.
- * @param {string} body - The HTML body argument passed by the request function in its callback.
- * @param {iapCallback} callback - Callback a function.
- * @param {(object|string)} callback.data - The API's response. Will be an object if sunnyday path.
- *   Will be HTML text if hibernating instance.
- * @param {error} callback.error - The error property of callback.
- */
+   * @description Inspect ServiceNow API response for an error, bad response code, or
+   *   a hibernating instance. If any of those conditions are detected, return an error.
+   *   Else return the API's response.
+   *
+   * @param {error} error - The error argument passed by the request function in its callback.
+   * @param {object} response - The response argument passed by the request function in its callback.
+   * @param {string} body - The HTML body argument passed by the request function in its callback.
+   * @param {iapCallback} callback - Callback a function.
+   * @param {(object|string)} callback.data - The API's response. Will be an object if sunnyday path.
+   *   Will be HTML text if hibernating instance.
+   * @param {error} callback.error - The error property of callback.
+   */
   processRequestResults(error, response, body, callback) {
   /**
    * You must build the contents of this function.
@@ -133,11 +133,11 @@ class ServiceNowConnector {
   // We are passing an anonymous function, an error-first callback,
   // for the second argument.
   
-    /**
-     * Process ServiceNow error, response and body.
-     * Check error and response code to make sure
-     * response is good.
-     */
+  /**
+   * Process ServiceNow error, response and body.
+   * Check error and response code to make sure
+   * response is good.
+   */
  
   if (error) {
       console.error('Error present.');
@@ -162,10 +162,6 @@ class ServiceNowConnector {
    *   from global const options and parameter callOptions.
    *   Executes request call, then verifies response.
    *
-   * @param {object} callOptions - Passed call options.
-   * @param {string} callOptions.query - URL query string.
-   * @param {string} callOptions.serviceNowTable - The table target of the ServiceNow table API.
-   * @param {string} callOptions.method - HTTP API request method.
    * @param {iapCallback} callback - Callback a function.
    * @param {(object|string)} callback.data - The API's response. Will be an object if sunnyday path.
    *   Will be HTML text if hibernating instance.
@@ -203,11 +199,10 @@ class ServiceNowConnector {
   /**
    * @memberof ServiceNowConnector
    * @method post
+   * @summary Calls ServiceNow GET API
    * @description Call the ServiceNow POST API. Sets the API call's method,
    *   then calls sendRequest().
    *
-   * @param {object} callOptions - Passed call options.
-   * @param {string} callOptions.serviceNowTable - The table target of the ServiceNow table API.
    * @param {iapCallback} callback - Callback a function.
    * @param {(object|string)} callback.data - The API's response. Will be an object if sunnyday path.
    *   Will be HTML text if hibernating instance.
