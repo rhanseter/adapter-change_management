@@ -6,7 +6,6 @@ const options = {
   serviceNowTable: 'change_request'
 };
 
-
 // Import built-in Node.js package path.
 const path = require('path');
 
@@ -28,15 +27,16 @@ function mainOnObject() {
   const connector = new ServiceNowConnector(options);
   // Test the object's get and post methods.
   // You must write the arguments for get and post.
-  connector.get(ServiceNowConnector,(data, error)=> {
+  connector.get((data, error) => {
     if (error) {
-      console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
+    console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
     }
     console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
   });
-  connector.post(ServiceNowConnector,(data, error) => {
+
+  connector.post((data, error) => {
     if (error) {
-      console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
+    console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
     }
     console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
   });
