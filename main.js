@@ -132,7 +132,8 @@ healthcheck(callback) {
       this.emitOnline();
      log.info(`ServiceNow ONLINE`);
      log.debug(`\nServiceNow Instance ID=' + this.id + '\n is ONLINE. Result=+ ${JSON.stringify(result)}`);
-   }
+   } 
+   if (callback) callback(result, error);
  });
 }
 
@@ -189,11 +190,27 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-     connector.get((data, error) => {
+     var changeTicket = [];
+     this.connector.get((data, error) => {
       if (error) {
       console.error(`\nError returned from GET request:\n${JSON.stringify(error)}`);
-      }
-      console.log(`\nResponse returned from GET request:\n${JSON.stringify(data)}`)
+     } else {
+        if (typeof data === 'object' && 'body' in data) {
+          const jsonBody = JSON.parse(data.body); 
+          for (var i in jsonBody.result) {
+            changeTicket.push({
+              "change_ticket_number" : jsonBody.result[i].number,
+              "active" : jsonBody.result[i].active,
+              "priority" : jsonBody.result[i].priority,
+              "description" : jsonBody.result[i].description,
+              "work_start" : jsonBody.result[i].work_start,
+              "work_end" : jsonBody.result[i].work_end,
+              "change_ticket_key" : jsonBody.result[i].sys_id
+              });
+          }
+        } 
+      } 
+      return callback(changeTicket, error); 
     });
   }
 
@@ -213,11 +230,26 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-     connector.post((data, error) => {
+     var changeTicket = [];
+
+     this.connector.post((data, error) => {
       if (error) {
       console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
-      }
-      console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
+     } else {
+        if (typeof data === 'object' && 'body' in data) {
+          const jsonBody = JSON.parse(data.body); 
+          changeTicket = {
+            change_ticket_number: jsonBody.result.number,
+            active: jsonBody.result.active,
+            priority: jsonBody.result.priority,
+            description: jsonBody.result.description,
+            work_start: jsonBody.result.work_start,
+            work_end: jsonBody.result.work_end,
+            change_ticket_key: jsonBody.result.sys_id
+          } 
+        } 
+      } 
+    return callback(changeTicket, error);
     });
   }
 }
